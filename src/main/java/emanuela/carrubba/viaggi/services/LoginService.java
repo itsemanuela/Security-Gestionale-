@@ -12,7 +12,7 @@ public class LoginService {
     private DipendenteService dipendenteService;
     private final JWTools jwTools;
     public LoginService(DipendenteService dipendenteService, JWTools jwTools) {
-        this.dipendenteService = new DipendenteService();
+        this.dipendenteService = dipendenteService;
         this.jwTools = jwTools;
     }
 

@@ -56,4 +56,12 @@ public class GlobalExceptionHandler {
                 HttpStatus.CONFLICT
         );
     }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<ErrorsDto>handleEmailException(EmailException ex) {
+        return new ResponseEntity<>(
+                new ErrorsDto(ex.getMessage(), LocalDateTime.now()),
+                HttpStatus.CONFLICT
+        );
+    }
 }
