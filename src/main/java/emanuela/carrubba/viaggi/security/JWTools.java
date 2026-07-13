@@ -2,11 +2,12 @@ package emanuela.carrubba.viaggi.security;
 
 
 import emanuela.carrubba.viaggi.entities.Dipendente;
+import emanuela.carrubba.viaggi.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 
 import java.util.Date;
 
@@ -34,6 +35,19 @@ public class JWTools {
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes())) // generatore firma
                 .compact();
 
+    }
+
+    //con parse leggo il token
+
+    public void validateToken(String token) {
+  try   {
+      Jwts.parser()
+              .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
+              .build()
+              .parse(token);
+  } catch (Exception e){
+      throw new UnauthorizedException("Accesso negato, rieffettuare il login");
+  }
     }
 
 }
