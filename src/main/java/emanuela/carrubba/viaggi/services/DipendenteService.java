@@ -59,8 +59,12 @@ public class DipendenteService  {
 nuovoDipendente.setAvatarUrl(dati.avatarUrl());
 nuovoDipendente.setPassword(passwordEncoder.encode(dati.password()));
 
+        System.out.println("DEBUG - Sto salvando nel DB: " + nuovoDipendente.getUsername());
         return dipendenteRepository.save(nuovoDipendente);
+
+
     }
+
 
     public Page<Dipendente> findAll(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));

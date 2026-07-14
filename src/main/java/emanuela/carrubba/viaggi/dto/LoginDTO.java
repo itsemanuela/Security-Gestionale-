@@ -1,4 +1,4 @@
 package emanuela.carrubba.viaggi.dto;
 
-public record LoginDTO(String email, String username) {
+public record LoginDTO(String email, String username, String password) {
 }
