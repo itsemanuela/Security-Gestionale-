@@ -45,8 +45,7 @@ public class LoginController {
         }
         Dipendente dipendenteRegistrato = this.dipendenteService.salvaDipendente(body);
         return new DipendenteResponseDTO(
-                dipendenteRegistrato.getEmail(),
-                dipendenteRegistrato.getUsername()
+                dipendenteRegistrato.getEmail()
 
         );
     }
