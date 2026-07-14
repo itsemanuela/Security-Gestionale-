@@ -30,7 +30,7 @@ public class JWTools {
 
     public String generateToken(Dipendente  dipendente) {
         return Jwts.builder().issuedAt(new Date(System.currentTimeMillis())) // data emissione
-                .expiration(new Date(System.currentTimeMillis() + 1000)) //data scadenza
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) //data scadenza
                 .subject(String.valueOf(dipendente.getId())) // id del proprietario
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes())) // generatore firma
                 .compact();

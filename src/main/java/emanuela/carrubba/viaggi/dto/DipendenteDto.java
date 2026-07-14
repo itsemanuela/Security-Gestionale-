@@ -19,5 +19,7 @@ public record DipendenteDto(
         @NotBlank(message = "L'email è obbligatoria")
         String email,
 
-        String avatarUrl
+        String avatarUrl,
+
+        String password
 ) {}

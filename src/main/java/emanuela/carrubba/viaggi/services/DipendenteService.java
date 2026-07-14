@@ -10,17 +10,13 @@ import emanuela.carrubba.viaggi.exceptions.NotFoundException;
 import emanuela.carrubba.viaggi.exceptions.UserNameException;
 import emanuela.carrubba.viaggi.repositories.DipendenteRepository;
 import emanuela.carrubba.viaggi.repositories.PrenotazioneRepository;
-import org.apache.coyote.BadRequestException;
-import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,12 +32,16 @@ public class DipendenteService  {
     Cloudinary cloudinary;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private DipendenteRepository dipendenteRepository;
 
     @Autowired
     private PrenotazioneRepository prenotazioneRepository;
 
     public Dipendente salvaDipendente(DipendenteDto dati) {
+
         // verifico se l'email è già presente
         if (dipendenteRepository.existsByEmail(dati.email())) {
             throw new EmailException("L'email " + dati.email() + " è già in uso!");
@@ -51,11 +51,13 @@ public class DipendenteService  {
         }
         Dipendente nuovoDipendente = new Dipendente();
 
+
         nuovoDipendente.setUsername(dati.username());
         nuovoDipendente.setNome(dati.nome());
         nuovoDipendente.setCognome(dati.cognome());
         nuovoDipendente.setEmail(dati.email());
 nuovoDipendente.setAvatarUrl(dati.avatarUrl());
+nuovoDipendente.setPassword(passwordEncoder.encode(dati.password()));
 
         return dipendenteRepository.save(nuovoDipendente);
     }

@@ -41,6 +41,7 @@ public class LoginController {
         if(bindingResult.hasErrors()){
             List<String> errors = bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getDefaultMessage()).toList();
             throw new ValidationException(errors);
+
         }
         Dipendente dipendenteRegistrato = this.dipendenteService.salvaDipendente(body);
         return new DipendenteResponseDTO(
